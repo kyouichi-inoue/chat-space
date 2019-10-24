@@ -1,24 +1,53 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# chat-space DB設計
+## usersテーブル
+|Column|Type|Options|
+|------|----|-------|
+|name|string|null: false, unique: true|
+|e-mail|string|null: false, unique: true|
+|password|string|null: false|
+|create_at|datetime||
+|update_at|datetime||
+### Association
+- has_many :groups
+- has_many :posts
+- has_many :messages
 
-Things you may want to cover:
+## posts(users_groups)テーブル
+|Column|Type|Options|
+|------|----|-------|
+|user_id|int|null: false|
+|image|text||
+|body|text|null: false|
+|group_id|integer|foreign_key: true|
+|user_id|integer|foreign_key: true|
+|create_at|datetime||
+|update_at|datetime||
+### Association
+- belongs_to :user
+- belongs_to :message
+- has_many :groups
 
-* Ruby version
+## groupsテーブル
+|Column|Type|Options|
+|------|----|-------|
+|name|text|null: false, unique: true|
+|user_id|text|foreign_key: true|
+|create_at|datetime||
+|update_at|datetime||
+### Association
+- has_many :posts
+- belongs_to :user
 
-* System dependencies
+## messagesテーブル
+|Column|Type|Options|
+|------|----|-------|
+|image|text||
+|body|text||
+|create_at|datetime||
+|update_at|datetime||
+### Association
+- belongs_to :post
+- belongs_to :user
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
