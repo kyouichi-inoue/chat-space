@@ -7,46 +7,42 @@
 |name|string|null: false, unique: true|
 |e-mail|string|null: false, unique: true|
 |password|string|null: false|
-|create_at|datetime||
-|update_at|datetime||
+|create_at|timestamps||
+|update_at|timestamps||
 ### Association
 - has_many :groups
 - has_many :posts
-- has_many :messages
+- has_many :groups, through: :groups_users
 
-## posts(users_groups)テーブル
+## postsテーブル
 |Column|Type|Options|
 |------|----|-------|
-|user_id|int|null: false|
-|image|text||
-|body|text|null: false|
-|group_id|integer|foreign_key: true|
 |user_id|integer|foreign_key: true|
-|create_at|datetime||
-|update_at|datetime||
+|group_id|integer|foreign_key: true|
+|image|string||
+|body|text|null: false|
 ### Association
 - belongs_to :user
-- belongs_to :message
-- has_many :groups
+- belongs_to :group
+
 
 ## groupsテーブル
 |Column|Type|Options|
 |------|----|-------|
-|name|text|null: false, unique: true|
-|user_id|text|foreign_key: true|
-|create_at|datetime||
-|update_at|datetime||
+|name|string|null: false, unique: true|
+|user_id|integer|foreign_key: true|
+|create_at|timestamps||
+|update_at|timestamps||
 ### Association
 - has_many :posts
-- belongs_to :user
+- has_many :users
+- has_many :users, through: :groups_users
 
-## messagesテーブル
+## groups_usersテーブル
 |Column|Type|Options|
 |------|----|-------|
-|image|text||
-|body|text||
-|create_at|datetime||
-|update_at|datetime||
+|user_id|integer|foreign_key: true|
+|group_id|integer|foreign_key: true|
 ### Association
 - belongs_to :post
 - belongs_to :user
